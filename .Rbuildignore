@@ -1,2 +1,6 @@
 ^NoRwayGeo\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$
+
+create_data.R
+make_package.R

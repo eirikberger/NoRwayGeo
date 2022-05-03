@@ -2,10 +2,19 @@ Package: NoRwayGeo
 Title: Makes Norwegian municipalities consistent over time
 Version: 0.0.0.9000
 Authors@R: 
-    person("Eirik", "Berger", , "eirik.berger@gmail.com", role = c("cre"))
-Description: Makes Norwegian municipalities consistent over time
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Eirik", "Berger", , "eirik.berger@gmail.com", role = "cre")
+Description: Makes clusters of Norwegian municipalities that can be
+    followed consistenyl over time.
+License: MIT + file LICENSE
+Depends: 
+    data.table,
+    R (>= 2.10)
+Imports:
+    igraph,
+    janitor,
+    readxl,
+    stringr
 Encoding: UTF-8
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
