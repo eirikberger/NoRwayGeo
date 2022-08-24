@@ -8,7 +8,7 @@ The development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("eirikberger/NoRwayGeo")
+devtools::install_github("eirikberger/NoRwayGeo", auth_token="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")
 ```
 
 # Using it
