@@ -1,6 +1,6 @@
 # NoRwayGeo <a href="https://github.com/eirikberger/NoRwayGeo"><img src="https://raw.githubusercontent.com/eirikberger/NoRwayGeo/main/logo.png" align="right" height="140" /></a>
 
-The package uses a cleaned version of SSB's overview of [historical changes in the municipality structure](https://www.ssb.no/metadata/alle-endringer-i-de-regionale-inndelingene/_/attachment/download/fe7adaa5-aeca-401f-95ff-688465ecf48f:0700aa845b3e92021383b96789be7237f87650ba/kommuneendringer_1838_2017.xlsx) to produce clusters of municipalities that can be followed consistently between two given years. 
+The package uses a cleaned version of SSB's overview of [historical changes in the municipality structure](https://www.ssb.no/metadata/alle-endringer-i-de-regionale-inndelingene/_/attachment/download/fe7adaa5-aeca-401f-95ff-688465ecf48f:0700aa845b3e92021383b96789be7237f87650ba/kommuneendringer_1838_2017.xlsx) to produce clusters of municipalities that can be followed consistently between two given years. It was developed to meet the needs of the author and his coauthors.
 
 ## Installation
 
