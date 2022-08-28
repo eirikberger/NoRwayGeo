@@ -29,4 +29,4 @@ count_clusters(1980, 2000)
 
 # Logo
 
-The logo for this package uses a self portrait of famous Norwegian painter [Nikolai Astrup](https://en.wikipedia.org/wiki/Nikolai_Astrup) (1880–1928). His name brother, [Nikolai Astrup](https://en.wikipedia.org/wiki/Nikolai_Astrup_(politician)), was a minister in the Norwegian Government responsible for merging municipalities as a part of a large reform in 2020-2021. He is therefore responsible for increasing the problem of inconsistent municipality structures over time in Norwegian data, that this package attempts to solve. 
+The logo for this package uses a self portrait by famous Norwegian painter [Nikolai Astrup](https://en.wikipedia.org/wiki/Nikolai_Astrup) (1880–1928). His name brother, [Nikolai Astrup](https://en.wikipedia.org/wiki/Nikolai_Astrup_(politician)), was a minister in the Norwegian Government responsible for merging municipalities as a part of a large reform in 2020-2021. He is therefore responsible for increasing the problem of changing municipality structures over time.
