@@ -36,10 +36,10 @@ print_clusters <- function(from_year, to_year) {
   d <- dta[year>=from_year & year<=to_year][,.(from, to, tidligere_kommunenavn)]
 
   # Graph
-  g <- igraph::graph_from_data_frame(d, directed=FALSE, vertices = NULL)
+  g <- suppressWarnings(igraph::graph_from_data_frame(d, directed=FALSE, vertices = NULL))
 
   # Get unique groups
-  muni_groups <- igraph::components(g, mode = c("strong"))
+  muni_groups <- suppressWarnings(igraph::components(g, mode = c("strong")))
 
   t <- setDT(as.data.frame(muni_groups$membership), keep.rownames='muni_number')
   setnames(t, 'muni_groups$membership', 'cluster')
@@ -66,7 +66,7 @@ graph_clusters <- function(from_year, to_year) {
   d <- dta[year>=from_year & year<=to_year][,.(from, to, tidligere_kommunenavn)]
 
   # Graph
-  g <- igraph::graph_from_data_frame(d, directed=FALSE, vertices = NULL)
+  g <- suppressWarnings(igraph::graph_from_data_frame(d, directed=FALSE, vertices = NULL))
   plot(g, vertex.label=d$tidligere_kommunenavn, main=paste0('Municipality changes between ', from_year, ' and ', to_year))
 }
 
@@ -90,10 +90,10 @@ count_clusters <- function(from_year, to_year) {
   d <- dta[year>=from_year & year<=to_year][,.(from, to, tidligere_kommunenavn)]
 
   # Graph
-  g <- igraph::graph_from_data_frame(d, directed=FALSE, vertices = NULL)
+  g <- suppressWarnings(igraph::graph_from_data_frame(d, directed=FALSE, vertices = NULL))
 
   # Get unique groups
-  muni_groups <- igraph::components(g, mode = c("strong"))
+  muni_groups <- suppressWarnings(igraph::components(g, mode = c("strong")))
 
   return(muni_groups$no)
 }
