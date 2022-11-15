@@ -2,7 +2,7 @@
 format: gfm
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.qmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -19,15 +19,14 @@ The package uses a cleaned version of SSB's overview of [historical changes in t
 
 The development version from [GitHub](https://github.com/) with:
 
-```{r, include=FALSE}
+```{r, eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("eirikberger/NoRwayGeo")
 ```
 
-# Using it
+## Using it
 
 The current version of the package only supports Norwegian municipalities, which are built in. 
-=
 
 ```{r}
 # Load library
@@ -52,6 +51,6 @@ graph_clusters(1980, 2000)
 count_clusters(1980, 2000)
 ```
 
-# Logo
+## Logo
 
 The logo for this package uses a self portrait by famous Norwegian painter [Nikolai Astrup](https://en.wikipedia.org/wiki/Nikolai_Astrup) (1880–1928). His name brother, [Nikolai Astrup](https://en.wikipedia.org/wiki/Nikolai_Astrup_(politician)), was a minister in the Norwegian Government responsible for merging municipalities as a part of a large reform in 2020-2021. He is therefore responsible for increasing the problem of changing municipality structures over time.

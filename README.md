@@ -1,5 +1,5 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.qmd. Please edit that file -->
 
 # NoRwayGeo <a href="https://github.com/eirikberger/NoRwayGeo"><img src="https://raw.githubusercontent.com/eirikberger/NoRwayGeo/main/logo.png" align="right" height="140" /></a>
 
@@ -14,9 +14,15 @@ author and his coauthors.
 
 The development version from [GitHub](https://github.com/) with:
 
-# Using it
+``` r
+# install.packages("devtools")
+devtools::install_github("eirikberger/NoRwayGeo")
+```
 
-# The current version of the package only supports Norwegian municipalities, which are built in.
+## Using it
+
+The current version of the package only supports Norwegian
+municipalities, which are built in.
 
 ``` r
 # Load library
@@ -75,7 +81,7 @@ count_clusters(1980, 2000)
 #> [1] 6
 ```
 
-# Logo
+## Logo
 
 The logo for this package uses a self portrait by famous Norwegian
 painter [Nikolai Astrup](https://en.wikipedia.org/wiki/Nikolai_Astrup)
