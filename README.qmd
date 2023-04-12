@@ -43,9 +43,11 @@ print_changes(1980, 2000)
 print_clusters(1980, 2000)
 ```
 
-```{r}
+```{r, eval = FALSE}
 graph_clusters(1980, 2000)
 ```
+
+![](man/figures/unnamed-chunk-6-1.png)
 
 ```{r}
 count_clusters(1980, 2000)

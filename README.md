@@ -74,7 +74,7 @@ print_clusters(1980, 2000)
 graph_clusters(1980, 2000)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)
+![](man/figures/unnamed-chunk-6-1.png)
 
 ``` r
 count_clusters(1980, 2000)
