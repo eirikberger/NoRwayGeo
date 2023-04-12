@@ -4,3 +4,6 @@
 
 create_data.R
 make_package.R
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
