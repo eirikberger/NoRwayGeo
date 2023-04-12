@@ -73,8 +73,7 @@ print_clusters(1980, 2000)
 ``` r
 graph_clusters(1980, 2000)
 ```
-
-![](man/figures/unnamed-chunk-6-1.png)
+<a href="https://github.com/eirikberger/NoRwayGeo"><img src="https://raw.githubusercontent.com/eirikberger/NoRwayGeo/main/man/figures/unnamed-chunk-6-1.png"</a>
 
 ``` r
 count_clusters(1980, 2000)
