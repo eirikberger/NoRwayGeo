@@ -8,7 +8,6 @@
 #'
 #' @export
 print_changes <- function(from_year, to_year) {
-  loadNamespace('data.table')
 
   file_path <- system.file("data", "historical_municipalities.csv", package="NoRwayGeo")
   dta <- fread(file_path)
@@ -16,6 +15,11 @@ print_changes <- function(from_year, to_year) {
   return(d)
 }
 
+
+# Helper function to standardize cluster naming
+standardize_cluster_name <- function(cluster_id) {
+  paste0("cluster_", formatC(cluster_id, width = 4, flag = "0"))
+}
 
 
 #' Print clusters of municipalities in Norway between `from_year` and `to_year`. Municipalities that remains unchanged, not merged or split, are not listed.
@@ -28,7 +32,6 @@ print_changes <- function(from_year, to_year) {
 #'
 #' @export
 print_clusters <- function(from_year, to_year) {
-  loadNamespace('data.table')
 
   # Import data
   file_path <- system.file("data", "historical_municipalities.csv", package="NoRwayGeo")
@@ -43,9 +46,12 @@ print_clusters <- function(from_year, to_year) {
 
   t <- setDT(as.data.frame(muni_groups$membership), keep.rownames='muni_number')
   setnames(t, 'muni_groups$membership', 'cluster')
+
+  # Apply standardize_cluster_name function to cluster names
+  t[, cluster := standardize_cluster_name(cluster)]
+
   print(t)
 }
-
 
 
 #' Graph clusters of municipality changes in Norway between `from_year` and `to_year`. Municipalities that remains unchanged, not merged or split, are not listed.
@@ -58,7 +64,6 @@ print_clusters <- function(from_year, to_year) {
 #'
 #' @export
 graph_clusters <- function(from_year, to_year) {
-  loadNamespace('data.table')
 
   # Import data
   file_path <- system.file("data", "historical_municipalities.csv", package="NoRwayGeo")
@@ -82,7 +87,6 @@ graph_clusters <- function(from_year, to_year) {
 #'
 #' @export
 count_clusters <- function(from_year, to_year) {
-  loadNamespace('data.table')
 
   # Import data
   file_path <- system.file("data", "historical_municipalities.csv", package="NoRwayGeo")
