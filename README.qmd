@@ -24,14 +24,14 @@ The development version from [GitHub](https://github.com/) with:
 devtools::install_github("eirikberger/NoRwayGeo")
 ```
 
-## Using it
-
 The current version of the package only supports Norwegian municipalities, which are built in. 
 
 ```{r}
 # Load library
 library(NoRwayGeo)
 ```
+
+## Consistent Municipality Structures
 
 Run commands for years between and including 1980 and 2000.
 
@@ -51,6 +51,20 @@ graph_clusters(1980, 2000)
 
 ```{r}
 count_clusters(1980, 2000)
+```
+
+## Linking Municipality Names to Number
+
+The data with historical municipality names are built in. Here is an example of how to use it.  
+
+```{r}
+match_municipality("Oppegaard")
+```
+
+You can also add optional argument to help the linking algorithm.
+
+```{r}
+match_municipality("Oppegaard", year = 1950, county_number = 2, threshold = 0.1)
 ```
 
 ## Logo
