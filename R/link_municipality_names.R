@@ -41,18 +41,16 @@ match_municipality <- function(name, year = NULL, county_number = NULL, threshol
 
   # Filter based on the provided conditions
   if(!is.null(year) & !is.null(county_number)){
-    result <- df[dist == min(dist) & year_created <= year & year_stopped >= year & county_number == county_number, .(municipality_number)]
+    result <- df[dist == min(dist) & year_created <= year & year_stopped >= year & county_number == county_number, .(municipality_number, dist, historiske_navn)]
   } else if(!is.null(year)){
-    result <- df[dist == min(dist) & year_created <= year & year_stopped >= year, .(municipality_number)]
+    result <- df[dist == min(dist) & year_created <= year & year_stopped >= year, .(municipality_number, dist, historiske_navn)]
   } else if(!is.null(county_number)){
-    result <- df[dist == min(dist) & county_number == county_number, .(municipality_number)]
+    result <- df[dist == min(dist) & county_number == county_number, .(municipality_number, dist, historiske_navn)]
   } else {
     result <- df[dist == min(dist), .(municipality_number, dist, historiske_navn)]
   }
 
   result <- unique(result)
-
-  print(result)
 
   # Sort the result by string distance and check the second best match
   result <- result[order(dist)]

@@ -28,3 +28,11 @@ hexSticker::sticker(imgpath, package="NoRwayGeo", p_size=20, s_width=1.2,
 # Cleanup
 ######################################
 usethis::use_tidy_description()
+
+
+
+
+###
+
+quarto::quarto_render("README.qmd")
+

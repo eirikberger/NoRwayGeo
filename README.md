@@ -8,7 +8,7 @@ changes in the municipality
 structure](https://www.ssb.no/metadata/alle-endringer-i-de-regionale-inndelingene/_/attachment/download/fe7adaa5-aeca-401f-95ff-688465ecf48f:0700aa845b3e92021383b96789be7237f87650ba/kommuneendringer_1838_2017.xlsx)
 to produce clusters of municipalities that can be followed consistently
 between two given years. It was developed to meet the needs of the
-author and his coauthors. See documentation [here](https://eirikberger.github.io/NoRwayGeo/).
+author and his coauthors.
 
 ## Installation
 
@@ -19,16 +19,15 @@ The development version from [GitHub](https://github.com/) with:
 devtools::install_github("eirikberger/NoRwayGeo")
 ```
 
-## Using it
-
 The current version of the package only supports Norwegian
 municipalities, which are built in.
 
 ``` r
 # Load library
 library(NoRwayGeo)
-#> Loading required package: data.table
 ```
+
+## Consistent Municipality Structures
 
 Run commands for years between and including 1980 and 2000.
 
@@ -52,32 +51,56 @@ print_changes(1980, 2000)
 
 ``` r
 print_clusters(1980, 2000)
-#>     muni_number cluster
-#>  1:         102       1
-#>  2:         114       1
-#>  3:         115       1
-#>  4:         130       1
-#>  5:         103       2
-#>  6:         113       2
-#>  7:         131       2
-#>  8:         133       2
-#>  9:         134       2
-#> 10:        1940       3
-#> 11:        2011       4
-#> 12:        2021       5
-#> 13:        2025       6
-#> 14:         105       1
-#> 15:         106       2
+#>     muni_number      cluster
+#>  1:         102 cluster_0001
+#>  2:         114 cluster_0001
+#>  3:         115 cluster_0001
+#>  4:         130 cluster_0001
+#>  5:         103 cluster_0002
+#>  6:         113 cluster_0002
+#>  7:         131 cluster_0002
+#>  8:         133 cluster_0002
+#>  9:         134 cluster_0002
+#> 10:        1940 cluster_0003
+#> 11:        2011 cluster_0004
+#> 12:        2021 cluster_0005
+#> 13:        2025 cluster_0006
+#> 14:         105 cluster_0001
+#> 15:         106 cluster_0002
 ```
 
 ``` r
 graph_clusters(1980, 2000)
 ```
+
 <a href="https://github.com/eirikberger/NoRwayGeo"><img src="https://raw.githubusercontent.com/eirikberger/NoRwayGeo/main/man/figures/unnamed-chunk-6-1.png"/></a>
 
 ``` r
 count_clusters(1980, 2000)
 #> [1] 6
+```
+
+## Linking Municipality Names to Number
+
+The data with historical municipality names are built in. Here is an
+example of how to use it.
+
+``` r
+match_municipality("Oppegaard")
+```
+
+You can also add optional argument to help the linking algorithm.
+
+``` r
+match_municipality("Oppegaard", year = 1950, county_number = 2, threshold = 0.1)
+#> $municipality_name
+#> [1] 217
+#> 
+#> $string_distance
+#> [1] 0
+#> 
+#> $name
+#> [1] "Oppegaard"
 ```
 
 ## Logo

@@ -57,7 +57,7 @@ count_clusters(1980, 2000)
 
 The data with historical municipality names are built in. Here is an example of how to use it.  
 
-```{r}
+```{r, eval = FALSE}
 match_municipality("Oppegaard")
 ```
 
