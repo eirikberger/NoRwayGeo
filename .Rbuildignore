@@ -7,3 +7,6 @@ make_package.R
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+
+^.*\.gml
+^.*\.zip
