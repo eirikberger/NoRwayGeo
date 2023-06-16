@@ -3,12 +3,16 @@
 
 # NoRwayGeo <a href="https://github.com/eirikberger/NoRwayGeo"><img src="https://raw.githubusercontent.com/eirikberger/NoRwayGeo/main/logo.png" align="right" height="140" /></a>
 
-The package uses a cleaned version of SSB’s overview of [historical
-changes in the municipality
+This package is an attempt at dealing with historical Norwegian
+municipalities. First, the package uses a cleaned version of SSB’s
+overview of [historical changes in the municipality
 structure](https://www.ssb.no/metadata/alle-endringer-i-de-regionale-inndelingene/_/attachment/download/fe7adaa5-aeca-401f-95ff-688465ecf48f:0700aa845b3e92021383b96789be7237f87650ba/kommuneendringer_1838_2017.xlsx)
 to produce clusters of municipalities that can be followed consistently
-between two given years. It was developed to meet the needs of the
-author and his coauthors.
+between two given years. Second, it provides functions and data to link
+current and historical municipalities (including different names and
+spellings) to a municipality number.
+
+It was developed to meet the needs of the author and his coauthors.
 
 ## Installation
 
@@ -82,8 +86,9 @@ count_clusters(1980, 2000)
 
 ## Linking Municipality Names to Number
 
-The data with historical municipality names are built in. Here is an
-example of how to use it.
+The data with historical municipality names are built in and include
+alternative names and ways of spelling. Here is an example of how to use
+it.
 
 ``` r
 match_municipality("Oppegaard")
