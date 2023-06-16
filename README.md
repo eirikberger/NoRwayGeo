@@ -13,7 +13,7 @@ current and historical municipalities (including different names and
 spellings) to a municipality number.
 
 It was developed to meet the needs of the author and his coauthors. See
-[documentation here](https://eirikberger.github.io/NoRwayGeo/)
+[documentation here](https://eirikberger.github.io/NoRwayGeo/).
 
 ## Installation
 
