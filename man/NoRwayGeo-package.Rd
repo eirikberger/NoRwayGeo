@@ -4,9 +4,9 @@
 \name{NoRwayGeo-package}
 \alias{NoRwayGeo}
 \alias{NoRwayGeo-package}
-\title{NoRwayGeo: Makes Norwegian municipalities consistent over time}
+\title{NoRwayGeo: Dealing with Norwegian Municipalities}
 \description{
-Makes clusters of Norwegian municipalities that can be followed consistenyl over time.
+Deals with Norwegian municipalities, including making them consistent across time and linking them to a municipality number.
 }
 \author{
 \strong{Maintainer}: Eirik Berger \email{eirik.berger@gmail.com}

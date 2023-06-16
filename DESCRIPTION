@@ -1,10 +1,9 @@
 Package: NoRwayGeo
-Title: Makes Norwegian municipalities consistent over time
+Title: Dealing with Norwegian Municipalities
 Version: 0.0.0.9000
 Authors@R: 
     person("Eirik", "Berger", , "eirik.berger@gmail.com", role = "cre")
-Description: Makes clusters of Norwegian municipalities that can be
-    followed consistenyl over time.
+Description: Deals with Norwegian municipalities, including making them consistent across time and linking them to a municipality number. 
 License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)

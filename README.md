@@ -12,7 +12,8 @@ between two given years. Second, it provides functions and data to link
 current and historical municipalities (including different names and
 spellings) to a municipality number.
 
-It was developed to meet the needs of the author and his coauthors.
+It was developed to meet the needs of the author and his coauthors. See
+[documentation here](https://eirikberger.github.io/NoRwayGeo/)
 
 ## Installation
 

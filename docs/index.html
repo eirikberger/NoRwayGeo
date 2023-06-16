@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Makes Norwegian municipalities consistent over time">
 <meta property="og:description" content="Makes clusters of Norwegian municipalities that can be
@@ -65,7 +65,8 @@
 <a class="anchor" aria-label="anchor" href="#norwaygeo-"></a>
 </h1>
 </div>
-<p>The package uses a cleaned version of SSB’s overview of <a href="https://www.ssb.no/metadata/alle-endringer-i-de-regionale-inndelingene/_/attachment/download/fe7adaa5-aeca-401f-95ff-688465ecf48f:0700aa845b3e92021383b96789be7237f87650ba/kommuneendringer_1838_2017.xlsx" class="external-link">historical changes in the municipality structure</a> to produce clusters of municipalities that can be followed consistently between two given years. It was developed to meet the needs of the author and his coauthors. See documentation <a href="https://eirikberger.github.io/NoRwayGeo/" class="external-link">here</a>.</p>
+<p>This package is an attempt at dealing with historical Norwegian municipalities. First, the package uses a cleaned version of SSB’s overview of <a href="https://www.ssb.no/metadata/alle-endringer-i-de-regionale-inndelingene/_/attachment/download/fe7adaa5-aeca-401f-95ff-688465ecf48f:0700aa845b3e92021383b96789be7237f87650ba/kommuneendringer_1838_2017.xlsx" class="external-link">historical changes in the municipality structure</a> to produce clusters of municipalities that can be followed consistently between two given years. Second, it provides functions and data to link current and historical municipalities (including different names and spellings) to a municipality number.</p>
+<p>It was developed to meet the needs of the author and his coauthors.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -73,15 +74,14 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"eirikberger/NoRwayGeo"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="using-it">Using it<a class="anchor" aria-label="anchor" href="#using-it"></a>
-</h2>
 <p>The current version of the package only supports Norwegian municipalities, which are built in.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load library</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">NoRwayGeo</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: data.table</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">NoRwayGeo</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="consistent-municipality-structures">Consistent Municipality Structures<a class="anchor" aria-label="anchor" href="#consistent-municipality-structures"></a>
+</h2>
 <p>Run commands for years between and including 1980 and 2000.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/print_changes.html">print_changes</a></span><span class="op">(</span><span class="fl">1980</span>, <span class="fl">2000</span><span class="op">)</span></span>
@@ -101,28 +101,46 @@
 <span><span class="co">#&gt; 13: 2025 2025 1992                  Tana</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/print_clusters.html">print_clusters</a></span><span class="op">(</span><span class="fl">1980</span>, <span class="fl">2000</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     muni_number cluster</span></span>
-<span><span class="co">#&gt;  1:         102       1</span></span>
-<span><span class="co">#&gt;  2:         114       1</span></span>
-<span><span class="co">#&gt;  3:         115       1</span></span>
-<span><span class="co">#&gt;  4:         130       1</span></span>
-<span><span class="co">#&gt;  5:         103       2</span></span>
-<span><span class="co">#&gt;  6:         113       2</span></span>
-<span><span class="co">#&gt;  7:         131       2</span></span>
-<span><span class="co">#&gt;  8:         133       2</span></span>
-<span><span class="co">#&gt;  9:         134       2</span></span>
-<span><span class="co">#&gt; 10:        1940       3</span></span>
-<span><span class="co">#&gt; 11:        2011       4</span></span>
-<span><span class="co">#&gt; 12:        2021       5</span></span>
-<span><span class="co">#&gt; 13:        2025       6</span></span>
-<span><span class="co">#&gt; 14:         105       1</span></span>
-<span><span class="co">#&gt; 15:         106       2</span></span></code></pre></div>
+<span><span class="co">#&gt;     muni_number      cluster</span></span>
+<span><span class="co">#&gt;  1:         102 cluster_0001</span></span>
+<span><span class="co">#&gt;  2:         114 cluster_0001</span></span>
+<span><span class="co">#&gt;  3:         115 cluster_0001</span></span>
+<span><span class="co">#&gt;  4:         130 cluster_0001</span></span>
+<span><span class="co">#&gt;  5:         103 cluster_0002</span></span>
+<span><span class="co">#&gt;  6:         113 cluster_0002</span></span>
+<span><span class="co">#&gt;  7:         131 cluster_0002</span></span>
+<span><span class="co">#&gt;  8:         133 cluster_0002</span></span>
+<span><span class="co">#&gt;  9:         134 cluster_0002</span></span>
+<span><span class="co">#&gt; 10:        1940 cluster_0003</span></span>
+<span><span class="co">#&gt; 11:        2011 cluster_0004</span></span>
+<span><span class="co">#&gt; 12:        2021 cluster_0005</span></span>
+<span><span class="co">#&gt; 13:        2025 cluster_0006</span></span>
+<span><span class="co">#&gt; 14:         105 cluster_0001</span></span>
+<span><span class="co">#&gt; 15:         106 cluster_0002</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/graph_clusters.html">graph_clusters</a></span><span class="op">(</span><span class="fl">1980</span>, <span class="fl">2000</span><span class="op">)</span></span></code></pre></div>
 <p><a href="https://github.com/eirikberger/NoRwayGeo" class="external-link"><img src="https://raw.githubusercontent.com/eirikberger/NoRwayGeo/main/man/figures/unnamed-chunk-6-1.png"></a></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/count_clusters.html">count_clusters</a></span><span class="op">(</span><span class="fl">1980</span>, <span class="fl">2000</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="linking-municipality-names-to-number">Linking Municipality Names to Number<a class="anchor" aria-label="anchor" href="#linking-municipality-names-to-number"></a>
+</h2>
+<p>The data with historical municipality names are built in and include alternative names and ways of spelling. Here is an example of how to use it.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/match_municipality.html">match_municipality</a></span><span class="op">(</span><span class="st">"Oppegaard"</span><span class="op">)</span></span></code></pre></div>
+<p>You can also add optional argument to help the linking algorithm.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/match_municipality.html">match_municipality</a></span><span class="op">(</span><span class="st">"Oppegaard"</span>, year <span class="op">=</span> <span class="fl">1950</span>, county_number <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $municipality_name</span></span>
+<span><span class="co">#&gt; [1] 217</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $string_distance</span></span>
+<span><span class="co">#&gt; [1] 0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $name</span></span>
+<span><span class="co">#&gt; [1] "Oppegaard"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="logo">Logo<a class="anchor" aria-label="anchor" href="#logo"></a>
