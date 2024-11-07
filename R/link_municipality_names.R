@@ -36,6 +36,10 @@ match_municipality <- function(name, year = NULL, county_number_input = NULL, th
   # Create a new column "county_number"
   df[, county_number := floor(municipality_number / 100)]
 
+  # Lower case names
+  df[, historiske_navn := stringr::str_to_lower(historiske_navn)]
+  name <- stringr::str_to_lower(name)
+  
   # Compute the string distances
   df[, dist := stringdist::stringdist(df$historiske_navn, name, method = "jw")]
 
