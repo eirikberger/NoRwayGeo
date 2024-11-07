@@ -60,7 +60,7 @@ match_municipality <- function(name, year = NULL, county_number_input = NULL, th
             "string_distance" = "",
             "name" = ""))
   } else if(nrow(result) == 0){
-    print(paste("No municipality found for", name, "in the year", year)
+    print(paste("No municipality found for", name, "in the year", year))
     return(list("municipality_name" = "",
             "string_distance" = "",
             "name" = ""))
