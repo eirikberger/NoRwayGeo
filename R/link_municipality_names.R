@@ -46,12 +46,16 @@ match_municipality <- function(name, year = NULL, county_number_input = NULL, th
   # Filter based on the provided conditions
   if(!is.null(year) & !is.null(county_number_input)){
     result <- df[dist == min(dist) & year_created <= year & year_stopped >= year & county_number == county_number_input, .(municipality_number, dist, historiske_navn)]
+    result <- unique(result, by = "historiske_navn")
   } else if(!is.null(year)){
     result <- df[dist == min(dist) & year_created <= year & year_stopped >= year, .(municipality_number, dist, historiske_navn)]
+    result <- unique(result, by = "historiske_navn")
   } else if(!is.null(county_number_input)){
     result <- df[dist == min(dist) & county_number == county_number_input, .(municipality_number, dist, historiske_navn)]
+    result <- unique(result, by = "historiske_navn")
   } else {
     result <- df[dist == min(dist), .(municipality_number, dist, historiske_navn)]
+    result <- unique(result, by = "historiske_navn")
   }
 
   result <- unique(result)
