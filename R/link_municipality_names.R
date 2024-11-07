@@ -55,9 +55,15 @@ match_municipality <- function(name, year = NULL, county_number_input = NULL, th
   # Sort the result by string distance and check the second best match
   result <- result[order(dist)]
   if(nrow(result) > 1 && (result$dist[2] - result$dist[1]) < threshold){
-    return(paste("The second best match is too close to the best match for", name))
+    print(paste("The second best match is too close to the best match for", name))
+    return(list("municipality_name" = "",
+            "string_distance" = "",
+            "name" = ""))
   } else if(nrow(result) == 0){
-    return(paste("No municipality found for", name, "in the year", year))
+    print(paste("No municipality found for", name, "in the year", year)
+    return(list("municipality_name" = "",
+            "string_distance" = "",
+            "name" = ""))
   } else {
     return(list("municipality_name" = result$municipality_number[1],
                 "string_distance" = result$dist,
