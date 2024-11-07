@@ -28,7 +28,7 @@
 #' }
 #' @export
 #' @import data.table
-match_municipality <- function(name, year = NULL, county_number = NULL, threshold = 0.1) {
+match_municipality <- function(name, year = NULL, county_number_input = NULL, threshold = 0.1) {
   # Import municipality names
   file_path <- system.file("data", "municipality_names.csv", package="NoRwayGeo")
   df <- fread(file_path)
@@ -40,12 +40,12 @@ match_municipality <- function(name, year = NULL, county_number = NULL, threshol
   df[, dist := stringdist::stringdist(df$historiske_navn, name, method = "jw")]
 
   # Filter based on the provided conditions
-  if(!is.null(year) & !is.null(county_number)){
-    result <- df[dist == min(dist) & year_created <= year & year_stopped >= year & county_number == county_number, .(municipality_number, dist, historiske_navn)]
+  if(!is.null(year) & !is.null(county_number_input)){
+    result <- df[dist == min(dist) & year_created <= year & year_stopped >= year & county_number == county_number_input, .(municipality_number, dist, historiske_navn)]
   } else if(!is.null(year)){
     result <- df[dist == min(dist) & year_created <= year & year_stopped >= year, .(municipality_number, dist, historiske_navn)]
-  } else if(!is.null(county_number)){
-    result <- df[dist == min(dist) & county_number == county_number, .(municipality_number, dist, historiske_navn)]
+  } else if(!is.null(county_number_input)){
+    result <- df[dist == min(dist) & county_number == county_number_input, .(municipality_number, dist, historiske_navn)]
   } else {
     result <- df[dist == min(dist), .(municipality_number, dist, historiske_navn)]
   }
