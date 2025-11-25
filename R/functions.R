@@ -36,7 +36,7 @@ print_clusters <- function(from_year, to_year) {
   # Import data
   file_path <- system.file("data", "historical_municipalities.csv", package="NoRwayGeo")
   dta <- fread(file_path)
-  d <- dta[year>=from_year & year<=to_year][,.(from, to, tidligere_kommunenavn)]
+  d <- dta[year>=from_year & year<=to_year][,.(from, to, tidligere_kommunenavn)][!is.na(from)][!is.na(to)]
 
   # Graph
   g <- suppressWarnings(igraph::graph_from_data_frame(d, directed=FALSE, vertices = NULL))
