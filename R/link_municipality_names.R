@@ -9,8 +9,7 @@
 #' irrespective of the year.
 #' @param county_number The number of the county (optional).
 #' @param threshold The minimum difference in string distance between the best and the second best match.
-#' @return The number of the municipality that matches the provided name and (if specified) year and
-#' county number, as well as the string distance and municipality name in a list.
+#' @return A list with `municipality_name`, `string_distance`, and matched historical name.
 #' @examples
 #' \dontrun{
 #' df <- data.table(
@@ -28,53 +27,62 @@
 #' }
 #' @export
 #' @import data.table
-match_municipality <- function(name, year = NULL, county_number_input = NULL, threshold = 0.1) {
+match_municipality <- function(name, year = NULL, county_number = NULL, threshold = 0.1) {
   # Import municipality names
-  file_path <- system.file("data", "municipality_names.csv", package="NoRwayGeo")
+  file_path <- system.file("extdata", "municipality_names.csv", package="NoRwayGeo")
   df <- fread(file_path)
 
   # Create a new column "county_number"
   df[, county_number := floor(municipality_number / 100)]
 
-  # Lower case names
-  df[, historiske_navn := stringr::str_to_lower(historiske_navn)]
-  name <- stringr::str_to_lower(name)
-  
-  # Compute the string distances
-  df[, dist := stringdist::stringdist(df$historiske_navn, name, method = "jw")]
-
-  # Filter based on the provided conditions
-  if(!is.null(year) & !is.null(county_number_input)){
-    result <- df[dist == min(dist) & year_created <= year & year_stopped >= year & county_number == county_number_input, .(municipality_number, dist, historiske_navn)]
-    result <- unique(result, by = "historiske_navn")
-  } else if(!is.null(year)){
-    result <- df[dist == min(dist) & year_created <= year & year_stopped >= year, .(municipality_number, dist, historiske_navn)]
-    result <- unique(result, by = "historiske_navn")
-  } else if(!is.null(county_number_input)){
-    result <- df[dist == min(dist) & county_number == county_number_input, .(municipality_number, dist, historiske_navn)]
-    result <- unique(result, by = "historiske_navn")
-  } else {
-    result <- df[dist == min(dist), .(municipality_number, dist, historiske_navn)]
-    result <- unique(result, by = "historiske_navn")
+  # Normalize query and candidate names for robust historical-name matching
+  normalize_name <- function(x) {
+    x <- tolower(x)
+    x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT", sub = "")
+    x <- gsub("[^a-z0-9 ]", " ", x, perl = TRUE)
+    x <- gsub("\\s+", " ", x, perl = TRUE)
+    trimws(x)
   }
 
-  result <- unique(result)
+  df[, historiske_navn_normalized := normalize_name(historiske_navn)]
+  name <- normalize_name(name)
 
-  # Sort the result by string distance and check the second best match
-  result <- result[order(dist)]
-  if(nrow(result) > 1 && (result$dist[2] - result$dist[1]) < threshold){
-    print(paste("The second best match is too close to the best match for", name))
+  # Apply constraints before fuzzy matching to avoid selecting an off-scope nearest neighbor
+  if (!is.null(year)) {
+    df <- df[year_created <= year & year_stopped >= year]
+  }
+  if (!is.null(county_number)) {
+    df <- df[county_number == county_number]
+  }
+
+  if (nrow(df) == 0L) {
+    print(paste("No municipality found for", name))
     return(list("municipality_name" = "",
             "string_distance" = "",
             "name" = ""))
-  } else if(nrow(result) == 0){
-    print(paste("No municipality found for", name, "in the year", year))
+  }
+
+  # Compute the string distances in the constrained set
+  df[, dist := stringdist::stringdist(historiske_navn_normalized, name, method = "jw")]
+  result <- df[order(dist, historiske_navn), list(municipality_number = municipality_number, dist = dist, historiske_navn = historiske_navn)]
+  result <- unique(result, by = "municipality_number")
+
+  if (nrow(result) == 0L) {
+    print(paste("No municipality found for", name))
+    return(list("municipality_name" = "",
+            "string_distance" = "",
+            "name" = ""))
+  }
+
+  # Check tie distance among best matches
+  if (nrow(result) > 1 && (result$dist[2] - result$dist[1]) < threshold) {
+    print(paste("The second best match is too close to the best match for", name))
     return(list("municipality_name" = "",
             "string_distance" = "",
             "name" = ""))
   } else {
     return(list("municipality_name" = result$municipality_number[1],
-                "string_distance" = result$dist,
+                "string_distance" = result$dist[1],
                 "name" = result$historiske_navn))
   }
 }

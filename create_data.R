@@ -1,46 +1,51 @@
 # Load packages
 library(data.table)
-library(readxl)
-library(janitor)
-library(stringr)
+library(jsonlite)
 
-# Import data
-dta <- setDT(read_excel("inst/data/kommuneendringer_1838_2017.xlsx"))
-dta <- clean_names(dta)
+# Pull municipal change history directly from SSB's official Klass API.
+classification_id <- 131
+query_from <- "1838-01-01"
+query_to <- format(Sys.Date(), "%Y-%m-%d")
+changes_url <- paste0(
+  "https://data.ssb.no/api/klass/v1/classifications/",
+  classification_id,
+  "/changes?from=", query_from,
+  "&to=", query_to
+)
 
-# Edit data
-setnames(dta, 'x8', 'beskrivelse')
+raw <- tryCatch(
+  {
+    fromJSON(changes_url)
+  },
+  error = function(err) {
+    stop("Failed to download changes from SSB API: ", conditionMessage(err))
+  }
+)
+changes <- as.data.table(raw$codeChanges)
 
-dta <- dta[,count_from:=.N, by=c('endringstidspunkt', 'tidligere_kommunenr')]
-dta <- dta[,count_to:=.N, by=c('endringstidspunkt', 'nytt_kommunenr')]
+# Keep the columns used by package functions and discard malformed rows
+dta <- changes[
+  !is.na(oldCode) & !is.na(newCode) & !is.na(changeOccurred),
+  .(
+    from = as.integer(oldCode),
+    to = as.integer(newCode),
+    year = as.integer(substr(changeOccurred, 1, 4)),
+    tidligere_kommunenavn = oldName
+  )
+]
 
-dta <- dta[count_from==1 & count_to>1, type:='merge']
-dta <- dta[count_from>1 & count_to==1, type:='split']
-dta <- dta[count_from>1 & count_to>1, type:='split & merge']
-dta <- dta[count_from==1 & count_to==1, type:='rename']
+dta <- dta[!is.na(from) & !is.na(to) & !is.na(year)]
+dta <- dta[year >= 1838 & year <= as.integer(format(Sys.Date(), "%Y"))]
 
-dta <- dta[,from:=as.numeric(tidligere_kommunenr)]
-dta <- dta[,to:=as.numeric(nytt_kommunenr)]
-dta <- dta[,year:=str_match(endringstidspunkt, '[0-9]{4}')]
+fwrite(dta, "inst/extdata/historical_municipalities.csv")
 
-dta <- dta[,.(from, to, year, tidligere_kommunenavn)]
-
-fwrite(dta, 'inst/data/historical_municipalities.csv')
-
-###################################
-
-# # NB!!
-# # There are some duplicates in the imported data
-# dta[,test:=.N, by=c(colnames(dta))][test>1,.(endringstidspunkt, tidligere_kommuneenhet, ny_kommuneenhet)]
-#
-# endringstidspunkt tidligere_kommuneenhet ny_kommuneenhet
-# 1:              1838            0680 Strømm    0711 Svelvik
-# 2:              1838            0680 Strømm    0711 Svelvik
-# 3:              1863          1941 Skjervøy   1941 Skjervøy
-# 4:              1863          1941 Skjervøy   1941 Skjervøy
-# 5:              1858             2003 Vadsø      2003 Vadsø
-# 6:              1858             2003 Vadsø      2003 Vadsø
-
-# There is at least one error in the input data
-# This regards '0120 Rødenes' in 1902, where municipality
-# number is both 0130 and 0120.
+if (nrow(dta) == 0L) {
+  warning("No rows were written to inst/extdata/historical_municipalities.csv. Check the SSB API response.")
+} else {
+  message(sprintf(
+    "Wrote %d rows covering years %d-%d to inst/extdata/historical_municipalities.csv",
+    nrow(dta),
+    min(dta$year),
+    max(dta$year)
+  ))
+}

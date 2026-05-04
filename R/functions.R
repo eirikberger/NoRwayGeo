@@ -9,9 +9,9 @@
 #' @export
 print_changes <- function(from_year, to_year) {
 
-  file_path <- system.file("data", "historical_municipalities.csv", package="NoRwayGeo")
+  file_path <- system.file("extdata", "historical_municipalities.csv", package="NoRwayGeo")
   dta <- fread(file_path)
-  d <- dta[year>=from_year & year<=to_year][,.(from, to, year, tidligere_kommunenavn)]
+  d <- dta[year >= from_year & year <= to_year, list(from = from, to = to, year = year, tidligere_kommunenavn = tidligere_kommunenavn)]
   return(d)
 }
 
@@ -34,9 +34,10 @@ standardize_cluster_name <- function(cluster_id) {
 print_clusters <- function(from_year, to_year) {
 
   # Import data
-  file_path <- system.file("data", "historical_municipalities.csv", package="NoRwayGeo")
+  file_path <- system.file("extdata", "historical_municipalities.csv", package="NoRwayGeo")
   dta <- fread(file_path)
-  d <- dta[year>=from_year & year<=to_year][,.(from, to, tidligere_kommunenavn)][!is.na(from)][!is.na(to)]
+  d <- dta[year >= from_year & year <= to_year, list(from = from, to = to, tidligere_kommunenavn = tidligere_kommunenavn)]
+  d <- d[!is.na(from) & !is.na(to)]
 
   # Graph
   g <- suppressWarnings(igraph::graph_from_data_frame(d, directed=FALSE, vertices = NULL))
@@ -44,11 +45,18 @@ print_clusters <- function(from_year, to_year) {
   # Get unique groups
   muni_groups <- suppressWarnings(igraph::components(g, mode = c("strong")))
 
-  t <- setDT(as.data.frame(muni_groups$membership), keep.rownames='muni_number')
-  setnames(t, 'muni_groups$membership', 'cluster')
+  membership <- muni_groups$membership
+  if (is.list(membership)) {
+    membership <- membership[[1]]
+  }
+
+  t <- data.table(
+    muni_number = names(membership),
+    cluster = as.integer(membership)
+  )
 
   # Apply standardize_cluster_name function to cluster names
-  t[, cluster := standardize_cluster_name(cluster)]
+  t$cluster <- standardize_cluster_name(t$cluster)
 
   print(t)
 }
@@ -66,9 +74,9 @@ print_clusters <- function(from_year, to_year) {
 graph_clusters <- function(from_year, to_year) {
 
   # Import data
-  file_path <- system.file("data", "historical_municipalities.csv", package="NoRwayGeo")
+  file_path <- system.file("extdata", "historical_municipalities.csv", package="NoRwayGeo")
   dta <- fread(file_path)
-  d <- dta[year>=from_year & year<=to_year][,.(from, to, tidligere_kommunenavn)]
+  d <- dta[year >= from_year & year <= to_year, list(from = from, to = to, tidligere_kommunenavn = tidligere_kommunenavn)]
 
   # Graph
   g <- suppressWarnings(igraph::graph_from_data_frame(d, directed=FALSE, vertices = NULL))
@@ -89,9 +97,9 @@ graph_clusters <- function(from_year, to_year) {
 count_clusters <- function(from_year, to_year) {
 
   # Import data
-  file_path <- system.file("data", "historical_municipalities.csv", package="NoRwayGeo")
+  file_path <- system.file("extdata", "historical_municipalities.csv", package="NoRwayGeo")
   dta <- fread(file_path)
-  d <- dta[year>=from_year & year<=to_year][,.(from, to, tidligere_kommunenavn)]
+  d <- dta[year >= from_year & year <= to_year, list(from = from, to = to, tidligere_kommunenavn = tidligere_kommunenavn)]
 
   # Graph
   g <- suppressWarnings(igraph::graph_from_data_frame(d, directed=FALSE, vertices = NULL))

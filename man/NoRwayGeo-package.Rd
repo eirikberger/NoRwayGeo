@@ -2,7 +2,6 @@
 % Please edit documentation in R/NoRwayGeo-package.R
 \docType{package}
 \name{NoRwayGeo-package}
-\alias{NoRwayGeo}
 \alias{NoRwayGeo-package}
 \title{NoRwayGeo: Dealing with Norwegian Municipalities}
 \description{

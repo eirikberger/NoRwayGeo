@@ -4,7 +4,7 @@ pacman::p_load(data.table, readxl, stringr, janitor, zoo)
 
 # Source: https://no.wikipedia.org/wiki/Norske_kommunenummer
 
-dta <- setDT(read_excel("inst/data/komnr.xlsx"))
+dta <- setDT(read_excel("inst/extdata/komnr.xlsx"))
 dta <- clean_names(dta)
 dta <- dta[,.(nr, navn, historiske_navn, opprettet)]
 
@@ -33,7 +33,7 @@ setnames(dta, "opprettet", "year_created")
 ###
 
 # Source: https://no.wikipedia.org/wiki/Liste_over_tidligere_norske_kommuner
-tmp <- setDT(read_excel("inst/data/tidligere_kommuner.xlsx"))
+tmp <- setDT(read_excel("inst/extdata/tidligere_kommuner.xlsx"))
 tmp <- clean_names(tmp)
 
 tmp <- tmp[str_detect(nr, "[0-9]{3,4}")][, nr := as.integer(nr)]
@@ -58,5 +58,4 @@ dta <- dta[is.na(year_stopped), year_stopped := 9999]
 ###
 
 setnames(dta, "nr", "municipality_number")
-fwrite(dta, "inst/data/municipality_names.csv")
-
+fwrite(dta, "inst/extdata/municipality_names.csv")

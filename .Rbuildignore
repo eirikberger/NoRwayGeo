@@ -1,5 +1,7 @@
 ^NoRwayGeo\.Rproj$
 ^\.Rproj\.user$
+^\.git$
+^\.gitignore$
 ^LICENSE\.md$
 
 create_data.R

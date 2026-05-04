@@ -4,13 +4,21 @@
 # NoRwayGeo <a href="https://github.com/eirikberger/NoRwayGeo"><img src="https://raw.githubusercontent.com/eirikberger/NoRwayGeo/main/logo.png" align="right" height="140" /></a>
 
 This package is an attempt at dealing with historical Norwegian
-municipalities. First, the package uses a cleaned version of SSB’s
-overview of [historical changes in the municipality
-structure](https://www.ssb.no/metadata/alle-endringer-i-de-regionale-inndelingene/_/attachment/download/fe7adaa5-aeca-401f-95ff-688465ecf48f:0700aa845b3e92021383b96789be7237f87650ba/kommuneendringer_1838_2017.xlsx)
+municipalities. First, the package uses SSB’s
+[`Kommuneinndeling` change history](https://data.ssb.no/api/klass/v1/classifications/131/changes)
 to produce clusters of municipalities that can be followed consistently
 between two given years. Second, it provides functions and data to link
 current and historical municipalities (including different names and
 spellings) to a municipality number.
+
+The historical-change file is generated from this endpoint from package root with:
+
+```bash
+Rscript create_data.R
+```
+
+It is set to pull data from 1838 onward to the current date, and currently
+includes changes through 2026-01-01.
 
 It was developed to meet the needs of the author and his coauthors. See
 [documentation here](https://eirikberger.github.io/NoRwayGeo/).
@@ -96,6 +104,17 @@ match_municipality("Oppegaard")
 ```
 
 You can also add optional argument to help the linking algorithm.
+
+Matching is performed in two stages: the optional `year` and
+`county_number` filters are applied first, then fuzzy matching is done on
+the remaining records. This improves constrained matching for older names and
+reduces false matches from municipalities outside your requested county/year.
+
+Municipality names are also normalized (case, punctuation, spacing, and
+accents) before matching to better support historical spellings.
+
+If the two best matches are too close under `threshold`, the function returns
+empty fields to avoid risky automatic assignments.
 
 ``` r
 match_municipality("Oppegaard", year = 1950, county_number = 2, threshold = 0.1)

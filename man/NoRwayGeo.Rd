@@ -7,3 +7,7 @@
 \description{
 The NoRwayGeo package provides a packace for creating clusters of municipalities, such that its possible to consistently track areas over time.
 }
+\author{
+\strong{Maintainer}: Eirik Berger \email{eirik.berger@gmail.com}
+
+}
